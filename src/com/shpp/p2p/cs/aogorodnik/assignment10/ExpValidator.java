@@ -18,15 +18,19 @@ public class ExpValidator {
 
     public boolean isValid() {
         return valid;
-    }
+    } /* IMPORTANT: allow only 1-letter variables */
 
     /**
      * This method takes a string, and checks if
      * it's a valid expression. Returns true if it is one
      */
     private boolean validate(String exp) {
-        return false; // dummy for now
-        //test
+        return true; // dummy
+    }
+
+    public static boolean isOperator(char sym) {
+        String operators = "+-*/^";
+        return operators.contains(String.valueOf(sym));
     }
 
 }
