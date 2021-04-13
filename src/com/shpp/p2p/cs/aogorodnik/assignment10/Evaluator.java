@@ -24,7 +24,14 @@ public class Evaluator implements Constants {
     double evaluate(ArrayList<String> exp) {
         /* Return the answer if the expression consists of only one number */
         if (exp.size() == 1) return Double.parseDouble(exp.get(0));
-        else if (exp.contains("^")) exp = calculateSubexp(exp, "^");
+        else {
+            /* Output intermediate result */
+            for (String el : exp)
+                System.out.print(el + " ");
+            System.out.print("\n");
+        }
+
+        if (exp.contains("^")) exp = calculateSubexp(exp, "^");
         else if (exp.contains("*")) exp = calculateSubexp(exp, "*");
         else if (exp.contains("/")) exp = calculateSubexp(exp, "/");
         else if (exp.contains("+")) exp = calculateSubexp(exp, "+");
@@ -41,6 +48,10 @@ public class Evaluator implements Constants {
         int index = exp.indexOf(op);
         double num1 = Double.parseDouble(exp.get(index - 1));
         double num2 = Double.parseDouble(exp.get(index + 1));
+        if (num2 == 0 && op.equals("/")) {
+            System.out.println("Error: Division by 0 is not allowed");
+            System.exit(EXIT_FAILURE);
+        }
 
         double res = switch (op) {
             case "^" -> Math.pow(num1, num2);

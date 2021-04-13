@@ -20,14 +20,14 @@ public class Expression implements Constants {
         /* Test validity */
         ExpValidator validator = new ExpValidator(strExp);
         if (!validator.isValid()) {
-            System.out.println("Something is wrong with exp syntax");
+            System.out.println("Error: Something is wrong with exp syntax");
             System.exit(EXIT_FAILURE);
         }
         if (args.length > 1) {
-            strExp = bindVariables(args);
+            strExp = bindVariables(strExp, args);
         }
         else if (args[0].matches(".*[a-zA-Z].*")) {
-            System.out.println("A value should be assigned to all variables");
+            System.out.println("Error: A value should be assigned to all variables");
             System.exit(EXIT_FAILURE);
         }
         exp = parseExp(strExp);
@@ -38,17 +38,17 @@ public class Expression implements Constants {
     }
 
     /**
-     * Takes a String array, where 0th element is a math expression with optional
-     * variables
+     * Takes String variable and array, where
+     * str is an expression, args[1:] are optional
+     * variables initialization in form "a=3"
      */
-    private String bindVariables(String[] args) {
-        String str = args[0];
+    private String bindVariables(String str, String[] args) {
         for (int i = 1; i < args.length; i++) {
             /* Remove spaces */
             String var = args[i].replaceAll("\\s+","");
 
             /* Test arg validity */
-            //if (!var.matches()) // dummy
+            ExpValidator.testArgumentValidity(var);
 
             /* Bind */
             String varName = var.split("=")[0];
@@ -56,8 +56,8 @@ public class Expression implements Constants {
             str = str.replaceAll(varName, varNum);
         }
         /* Check if there are unbounded variables */
-        if (str.contains("[a-zA-Z]")) {
-            System.out.println("A value should be assigned to all variables");
+        if (str.matches(".*[a-zA-Z].*")) {
+            System.out.println("Error: A value should be assigned to all variables");
             System.exit(EXIT_FAILURE);
         }
         return str;
