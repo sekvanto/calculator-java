@@ -30,6 +30,7 @@ public class Expression implements Constants {
             System.out.println("Error: A value should be assigned to all variables");
             System.exit(EXIT_FAILURE);
         }
+        ExpValidator.checkOperators(strExp);
         exp = parseExp(strExp);
     }
 

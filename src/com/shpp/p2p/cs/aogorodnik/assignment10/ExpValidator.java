@@ -48,11 +48,13 @@ public class ExpValidator implements Constants {
     /**
      * Takes a string and checks validity of operators
      */
-    private void checkOperators(String exp) {
-        if (isOperator(exp.charAt(0)) || isOperator(exp.charAt(exp.length() - 1))) {
+    public static void checkOperators(String exp) {
+        /* Check if start/end is valid */
+        if ((isOperator(exp.charAt(0)) && (exp.charAt(0) != '-' || isOperator(exp.charAt(1)))) || isOperator(exp.charAt(exp.length() - 1))) {
             System.out.println("Error: Expression must start and end with a number/variable");
             System.exit(EXIT_FAILURE);
         }
+        /* Check if no operators are near each other */
         for (int i = 0; i < exp.length(); i++) {
             if (isOperator(exp.charAt(i)) && isOperator(exp.charAt(i + 1))) {
                 if (exp.charAt(i + 1) != '-') {
@@ -115,7 +117,7 @@ public class ExpValidator implements Constants {
             System.out.println("Error: argument cannot be an empty string");
             System.exit(EXIT_FAILURE);
         }
-        if (!arg.matches("[a-zA-Z]=[0-9]+(\\.[0-9]+)?")) {
+        if (!arg.matches("[a-zA-Z]=-*[0-9]+(\\.[0-9]+)?")) {
             System.out.println("Error: invalid argument initialization");
             System.exit(EXIT_FAILURE);
         }

@@ -30,13 +30,22 @@ public class Evaluator implements Constants {
                 System.out.print(el + " ");
             System.out.print("\n");
         }
-
+        /* Top priority */
         if (exp.contains("^")) exp = calculateSubexp(exp, "^");
-        else if (exp.contains("*")) exp = calculateSubexp(exp, "*");
-        else if (exp.contains("/")) exp = calculateSubexp(exp, "/");
-        else if (exp.contains("+")) exp = calculateSubexp(exp, "+");
-        else if (exp.contains("-")) exp = calculateSubexp(exp, "-");
-
+        /* Second priority */
+        else if (exp.contains("*") || exp.contains("/")) {
+            if (!exp.contains("/") || (exp.indexOf("*") < exp.indexOf("/") && exp.contains("*")))
+                exp = calculateSubexp(exp, "*");
+            else
+                exp = calculateSubexp(exp, "/");
+        }
+        /* Third priority */
+        else if (exp.contains("+") || exp.contains("-")) {
+            if (!exp.contains("-") || (exp.indexOf("+") < exp.indexOf("-") && exp.contains("+")))
+                exp = calculateSubexp(exp, "+");
+            else
+                exp = calculateSubexp(exp, "-");
+        }
         /* Recursion until the expression is fully evaluated */
         return evaluate(exp);
     }
