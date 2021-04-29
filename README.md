@@ -1,5 +1,4 @@
-Expression evaluator v2.0
-
+Expression evaluator v2.0\
 Supports:
 
     - +,-,\*,/,^ operations
@@ -17,4 +16,19 @@ Example:
 ![scheme](assets/scheme.png)
 
 The expression is parsed into AST (abstract syntax tree), example:
-![ast](assets/ast.png)
+
+```
+     * "1+(1+3*sin(-x))^7"        * "1-2-3-(4-5)"
+     *                 [+]        *              [-]
+     *                /  \        *            /    \
+     *              [^]  [1]      *         [-]      [-]
+     *             /  \           *        /  \     /  \
+     *           [+]  [7]         *     [-]  [3]  [4]  [5]
+     *          /  \              *    /  \
+     *        [*]  [1]            *  [1]  [2]
+     *       /  \                 *
+     *   [sin]  [3]               *
+     *     |                      *
+     *    [-x]                    *
+     *                            *
+```
