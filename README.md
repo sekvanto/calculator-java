@@ -1,5 +1,7 @@
 Expression evaluator v2.0
+
 Supports:
+
     - +,-,\*,/,^ operations
     - negative numbers and numbers with floating point
     - parentheses ()
