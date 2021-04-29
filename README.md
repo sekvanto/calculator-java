@@ -8,6 +8,8 @@ Supports:
     - single-letter variables (x, Y, z, m...)
     - advanced syntax validation
 
+Warning: Requires JDK 12+
+
 # How it works
 Example:
 ![example](assets/example.png)
